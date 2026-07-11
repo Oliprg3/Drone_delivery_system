@@ -1,0 +1,10 @@
+version: '3'
+services:
+  sim:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - API_ENABLED=true
+    volumes:
+      - ./logs:/app/logs
