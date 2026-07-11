@@ -22,7 +22,7 @@ class Simulation:
 
     def _init_drones(self):
         for i in range(settings.NUM_DRONES):
-            start = (0,0)  # all start at base
+            start = (0,0)  
             drone = Drone(i, start)
             self.world.add_drone(drone)
 
@@ -56,8 +56,8 @@ class Simulation:
             self.world.add_order(order)
 
     def _apply_weather(self):
-        # Simulate wind affecting movement: randomly change drone position? simpler: drain extra battery
-        if random.random() < 0.1:  # 10% chance of strong wind
+       
+        if random.random() < 0.1: 
             for drone in self.world.drones:
                 if drone.is_active():
                     drone.battery = max(0, drone.battery - 0.5)
@@ -66,15 +66,10 @@ class Simulation:
         for idx, drone in enumerate(self.world.drones):
             if not drone.is_active():
                 continue
-            # If drone has no task, assign one based on agent action (or heuristic)
-            # Here we assume actions are provided by agents (could be None for heuristic)
-            # For RL, action might be index of order to pick? For simplicity, we handle inside agents.
-            # The simulation doesn't directly use actions; agents set drone's target/path via services.
-            # So we just move along existing path.
+      
             if drone.status == "moving":
                 drone.move_along_path()
                 if drone.status == "idle":
-                    # Arrived at target: check if it's pickup or delivery
                     if drone.target and any(o.pickup == drone.target and not o.picked_up for o in self.world.orders):
                         for o in self.world.orders:
                             if not o.picked_up and o.pickup == drone.target:
@@ -90,8 +85,7 @@ class Simulation:
                                 break
 
     def _check_deliveries(self):
-        # Timeout penalty for waiting orders
-        for o in self.world.orders[:]:
+         for o in self.world.orders[:]:
             o.waiting_steps += 1
             if o.waiting_steps > 200:
                 self.world.total_reward -= 2.0
