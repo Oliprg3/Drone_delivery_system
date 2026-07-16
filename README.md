@@ -1,6 +1,4 @@
-#  PRODUCTION READY DRONE DELIVERY SYSTEM
-
-A high‑fidelity, multi‑agent drone delivery simulator with dynamic obstacles, weather, collision avoidance, and RL integration.
+ DRONE DELIVERY SYSTEM
 
 ## Features
 - Realistic drone physics (battery, speed, cargo)
