@@ -1,14 +1,5 @@
  DRONE DELIVERY SYSTEM
 
-## Features
-- Realistic drone physics (battery, speed, cargo)
-- Dynamic obstacles and weather (wind, rain)
-- A* pathfinding with re‑planning
-- Cooperative collision avoidance
-- Gym environment for Reinforcement Learning (PPO, DQN)
-- REST API for real‑time control and monitoring
-- Prometheus metrics
-- Dockerised for easy deployment
 
 ## Quick Start
 ```bash
