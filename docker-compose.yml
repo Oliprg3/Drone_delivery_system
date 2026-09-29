@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: drone-delivery-system:latest
+    ports:
+      - "8000:8000"
+    environment:
+      API_ENABLED: "true"
+      API_HOST: "0.0.0.0"
+      API_PORT: "8000"
+      GRID_SIZE: "30,30"
+      NUM_DRONES: "5"
+      LOG_LEVEL: "INFO"
+    volumes:
+      - ./.env:/app/.env:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  sim:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: drone-delivery-system:latest
+    command: ["drone-sim", "--agent", "heuristic", "--headless", "--max-steps", "2000"]
+    environment:
+      API_ENABLED: "false"
+      NUM_DRONES: "5"
+    profiles: ["batch"]

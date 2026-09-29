@@ -1,0 +1,35 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Secrets
+.env
+!.env.example
+
+# Project output
+artifacts/
+logs/
+*.log
+*.zip
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

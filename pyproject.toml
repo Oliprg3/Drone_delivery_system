@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drone-delivery-system"
+version = "1.0.0"
+description = "Multi-agent drone delivery simulator with pathfinding, collision avoidance and PPO training."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Oliprg3" }]
+keywords = ["simulation", "multi-agent", "pathfinding", "reinforcement-learning", "drone"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# Core runtime: everything needed to step the simulation.
+dependencies = [
+    "numpy>=1.26,<3",
+    "pydantic>=2.9,<3",
+    "pydantic-settings>=2.4,<3",
+    "prometheus-client>=0.20,<1",
+]
+
+[project.optional-dependencies]
+api = ["fastapi>=0.115,<1", "uvicorn[standard]>=0.30,<1"]
+viz = ["pygame>=2.6,<3"]
+rl = ["gymnasium>=0.29,<1", "stable-baselines3>=2.3,<3", "torch>=2.4,<3"]
+dev = [
+    "pytest>=8.3,<9",
+    "httpx>=0.27,<1",
+    "ruff>=0.6",
+]
+all = [
+    "drone-delivery-system[api,viz,rl,dev]",
+]
+
+[project.scripts]
+drone-sim = "drone_delivery.cli.run_simulation:main"
+drone-train = "drone_delivery.cli.train:main"
+drone-api = "drone_delivery.cli.serve:main"
+
+[project.urls]
+Homepage = "https://github.com/Oliprg3/Drone_delivery_system"
+Repository = "https://github.com/Oliprg3/Drone_delivery_system"
+Issues = "https://github.com/Oliprg3/Drone_delivery_system/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+drone_delivery = ["py.typed"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4"]
+ignore = ["B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/drone_delivery/cli/train.py" = ["E402"]
+"tests/*" = ["E402"]
